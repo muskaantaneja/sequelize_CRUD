@@ -30,5 +30,28 @@ router.post("/create-user", async (req, res) => {
     .then((user) => res.redirect("/"))
     .catch((err) => res.render("error", { error: err.message }));
 });
+//update users
+router.get("/update", (req, res) => {
+ models.User.update({ lastName: "ta" }, {
+  where: {
+    lastName: "Taneja"
+  }})
+  models.User.findAll()
+    .then((user) => {
+      res.json(user);
+    })
+});
+
+// delete user and then show remaining data in postman body
+router.get("/:id", (req, res) => {
+  models.User.destroy({ 
+  where: {id : req.params.id},
+})
+ models.User.findAll()
+    .then((user) => {
+      res.json(user);
+    })
+});
+
 
 module.exports = router;
